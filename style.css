@@ -98,6 +98,10 @@ nav ul li a {
     font-size: 16px;
     transition: var(--transition);
     position: relative;
+    display: block;
+    padding: 15px 0;
+    width: 100%;
+    font-size: 18px;
 }
 
 nav ul li a:hover {
