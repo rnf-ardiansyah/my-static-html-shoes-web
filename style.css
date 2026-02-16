@@ -24,6 +24,15 @@
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
+/* ========== HILANGKAN TAP HIGHLIGHT BIRU DI MOBILE ========== */
+a, button, .btn-product, .nav-cta, .mobile-menu-btn, 
+.product-img, .modal-close, .logo, nav ul li a {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 body {
     line-height: 1.6;
     color: var(--dark);
