@@ -9,6 +9,7 @@ const modalShoePrice = document.getElementById('modalShoePrice');
 const whatsappBtn = document.getElementById('whatsappBtn');
 const heroShoe = document.getElementById('heroShoe');
 
+let resizeTimer;
 
 mobileMenuBtn.addEventListener('click', () => {
     navMenu.classList.toggle('active');
@@ -17,14 +18,12 @@ mobileMenuBtn.addEventListener('click', () => {
         : '<i class="fas fa-bars"></i>';
 });
 
-
 document.addEventListener('click', (e) => {
     if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
         navMenu.classList.remove('active');
         mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
     }
 });
-
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -35,7 +34,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
-
             navMenu.classList.remove('active');
             mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             
@@ -46,7 +44,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
-
 
 function setupWhatsAppInteraction() {
     let currentProduct = 'default';
@@ -91,7 +88,6 @@ function setupWhatsAppInteraction() {
     }
 }
 
-
 window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
     if (window.scrollY > 50) {
@@ -100,7 +96,6 @@ window.addEventListener('scroll', () => {
         header.classList.remove('scrolled');
     }
 });
-
 
 const observerOptions = {
     threshold: 0.1,
@@ -120,7 +115,6 @@ document.querySelectorAll('.feature-card, .product-card, .testimonial-card').for
     observer.observe(el);
 });
 
-
 function preloadImages() {
     const images = document.querySelectorAll('img[src]');
     
@@ -135,7 +129,6 @@ function preloadImages() {
         };
     });
 }
-
 
 function setupShoeAnimations() {
     if (heroShoe && window.innerWidth > 768) {
@@ -173,7 +166,6 @@ function setupShoeAnimations() {
         });
     });
 }
-
 
 function showShoeModal(shoeType) {
     // Find the product card based on shoe type
@@ -219,7 +211,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-
 function adjustForMobile() {
     const isMobile = window.innerWidth <= 768;
     
@@ -229,7 +220,6 @@ function adjustForMobile() {
         document.documentElement.style.setProperty('--rotation-angle', '3deg');
     }
 }
-
 
 function setupButtonInteractions() {
     // WhatsApp button hover effect
@@ -262,7 +252,6 @@ function setupButtonInteractions() {
     });
 }
 
-
 function setupNavigationHighlight() {
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('#navMenu a');
@@ -289,6 +278,16 @@ function setupNavigationHighlight() {
     window.addEventListener('scroll', highlightNavLink);
 }
 
+// Fungsi untuk menangani resize
+function handleResize() {
+    adjustForMobile(); // fungsi yang sudah ada
+    
+    // Jika layar melebihi 768px (mode desktop), sembunyikan menu mobile
+    if (window.innerWidth > 768) {
+        navMenu.classList.remove('active');
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     setupWhatsAppInteraction();
@@ -299,11 +298,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setupNavigationHighlight();
     
     // Window resize handler
-    let resizeTimer;
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', function() {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            adjustForMobile();
-        }, 250);
+        resizeTimer = setTimeout(handleResize, 250);
     });
 });
